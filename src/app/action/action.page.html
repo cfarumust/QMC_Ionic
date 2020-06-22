@@ -1,0 +1,96 @@
+<ion-header  class="ion-text-center" color="primary">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Action Generator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="addAction(form)">
+    <ion-grid>
+      <ion-row color="primary" justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div padding>
+            
+            <ion-item>
+				<ionic-selectable
+				[(ngModel)]="sActionType"
+				[items]="action_types"
+				placeholder="Action types"
+				itemValueField="nActionTypeId"
+				itemTextField="sActionType"
+				[canSearch]="true"
+				(onChange)="actionTypeChange($event)"
+				[ngModelOptions]="{standalone: true}">
+				</ionic-selectable>
+        	</ion-item>
+        	<ion-item>
+              	<ion-input name="action" type="text" placeholder="Action" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+				<ionic-selectable
+				[(ngModel)]="sEscalationProfile"
+				[items]="escalation_profiles"
+				placeholder="Escalation profile"
+				itemValueField="sEscProfile"
+				itemTextField="sEscProfile"
+				[canSearch]="true"
+				(onChange)="escalationChange($event)"
+				[ngModelOptions]="{standalone: true}">
+				</ionic-selectable>
+        	</ion-item>
+            <ion-item>
+			    <ion-label color="primary" (click)="mytoggle.checked = !mytoggle.checked">Feedback on close</ion-label>
+			    <ion-toggle #mytoggle class="button" color="secondary" [(ngModel)]="feedback" [ngModelOptions]="{standalone: true}"></ion-toggle>
+			</ion-item>
+        	
+            <ion-item>
+				<ionic-selectable
+				[(ngModel)]="assigned_to"
+				[items]="users"
+				placeholder="Assigned to"
+				itemValueField="nPers_IdNr"
+				itemTextField="sPersName"
+				[canSearch]="true"
+				(onChange)="assignedToChange($event)"
+				[ngModelOptions]="{standalone: true}">
+				</ionic-selectable>
+        	</ion-item>
+
+
+        	<ion-item>
+			  	<ion-label>YYYY-MM-DD</ion-label>
+			  	<ion-datetime name='assigned_until' displayFormat="YYYY-MM-DD" placeholder="Assigned until" ngModel></ion-datetime>
+			</ion-item>
+
+            <ion-item>
+				<ionic-selectable
+				[(ngModel)]="priority"
+				[items]="priorities"
+				placeholder="Priority"
+				itemValueField="id"
+				itemTextField="name"
+				[canSearch]="false"
+				(onChange)="priorityChange($event)"
+				[ngModelOptions]="{standalone: true}">
+				</ionic-selectable>
+        	</ion-item>
+        	<ion-item>
+              	  <ion-textarea name='comment' rows="6" cols="20" placeholder="Comment " ngModel ></ion-textarea>
+            </ion-item>
+        	<ion-item>
+              	  <ion-textarea name='additional_info' rows="6" cols="20" placeholder="Additional info" ngModel ></ion-textarea>
+            </ion-item>
+
+          </div>
+          <div padding>
+            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Add</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

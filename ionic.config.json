@@ -1,0 +1,7 @@
+{
+  "name": "menu-jitter",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
