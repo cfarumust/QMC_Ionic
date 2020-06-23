@@ -49,8 +49,8 @@ export class AppComponent {
   }
 
   logout(){
-    console.log('here');
     this.storage.clear();
+    localStorage.clear();
     this.router.navigate(['login']);
 
   }

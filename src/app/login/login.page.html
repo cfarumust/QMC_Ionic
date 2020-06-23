@@ -23,7 +23,7 @@
           <ionic-selectable
             [(ngModel)]="plant"
             [items]="plants"
-            placeholder="Plants"
+            placeholder="Select Plant"
             itemValueField="nlfdmandnr"
             itemTextField="smandbez"
             [canSearch]="true"
@@ -33,7 +33,7 @@
         </ion-item>
           </div>
           <div padding>
-            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
+            <ion-button size="large" type="submit" [disabled]="form.invalid || !flag" expand="block">Login </ion-button>
           </div>
         </ion-col>
       </ion-row>

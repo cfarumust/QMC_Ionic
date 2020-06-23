@@ -21,7 +21,7 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item (click)="logout()" >
               
-                <ion-icon slot="start" name="log-out-outline"></ion-icon>
+                <ion-icon slot="start" name="log-out-outline" *ngIf="this.router.url != '/login'" ></ion-icon>
                   <ion-label>
                     Logout
                   </ion-label>

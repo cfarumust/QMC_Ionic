@@ -33,15 +33,11 @@ export class UserService implements HttpInterceptor {
    * @param http The standard Angular HttpClient to make requests
    */
   constructor(private http: HttpClient, private storage: Storage) { 
-    this.storage.get('token').then((val) => {
-        this.token = val
-        console.log(this.token)
-      });
+    
   }
    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Clone the request to add the new header
-    const clonedRequest = req.clone({ setHeaders: { 'Content-Type': 'application/json',
-'Access-Control-Allow-Headers': 'Accept', Authorization: 'Bearer '+this.token } });
+    const clonedRequest = req.clone({ setHeaders: {  Authorization: 'Bearer '+localStorage.getItem("token") } });
 
 
     // Pass the cloned request instead of the original request to the next handle
@@ -60,6 +56,11 @@ export class UserService implements HttpInterceptor {
 
     getActionTypes(){
       return this.http.get(`${this.url}/actiontype/all`);
+
+    }
+
+    getActionsByType(typeId){
+      return this.http.get(`${this.url}/action/${typeId}`);
 
     }
 

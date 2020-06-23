@@ -16,10 +16,10 @@
           <div padding>
             
             <ion-item>
+            	<ion-label>Action types</ion-label>
 				<ionic-selectable
 				[(ngModel)]="sActionType"
 				[items]="action_types"
-				placeholder="Action types"
 				itemValueField="nActionTypeId"
 				itemTextField="sActionType"
 				[canSearch]="true"
@@ -27,14 +27,78 @@
 				[ngModelOptions]="{standalone: true}">
 				</ionic-selectable>
         	</ion-item>
+        	<!-- <ion-item *ngIf="showActionSelect">
+            	<ion-label>Select Action</ion-label>
+				<ionic-selectable
+				[(ngModel)]="action"
+				[items]="actions"
+				itemValueField="sTask"
+				itemTextField="sTask"
+				[canSearch]="true"
+				(onChange)="actionChange($event)"
+				[ngModelOptions]="{standalone: true}">
+				</ionic-selectable>
+				
+        	</ion-item> -->
         	<ion-item>
-              	<ion-input name="action" type="text" placeholder="Action" ngModel required></ion-input>
+        		<ion-label>Select Action</ion-label>
+        		<ionic-selectable #actionComponent [(ngModel)]="action" itemValueField="sTask" 
+			      itemTextField="sTask" [items]="actions" [canSearch]="true" [canClear]="true"
+			      (onSearchFail)="onSearchFail($event)" (onSearchSuccess)="onSearchSuccess($event)" (onChange)="actionChange($event)" [ngModelOptions]="{standalone: true}">
+			      <ng-template ionicSelectableItemTemplate let-action="item">
+			        <ion-label>
+			          {{action.sTask}} 
+			        </ion-label>
+			      </ng-template>
+			      <ng-template ionicSelectableAddItemTemplate let-action="item">
+			        <form [formGroup]="actionForm" novalidate>
+			          <ion-list>
+			            <ion-list-header>
+			              Create Action
+			            </ion-list-header>
+			            <ion-item>
+			              No actions found. Would you like to add one?
+			            </ion-item>
+			            <ion-item>
+			              <!-- <ion-label>Title</ion-label> -->
+			              <ion-input formControlName="actionName"  ></ion-input>
+			            </ion-item>
+			            
+			          </ion-list>
+			      </form>
+			        <ion-footer>
+			          <ion-toolbar>
+			            <ion-row>
+			              <ion-col [size]="6">
+			                <ion-button expand="full" (click)="actionComponent.hideAddItemTemplate()">
+			                  Cancel
+			                </ion-button>
+			              </ion-col>
+			              <ion-col [size]="6">
+			                <ion-button expand="full" (click)="addActionTitle(event)" >
+			                  create
+			                </ion-button>
+			              </ion-col>
+			            </ion-row>
+			          </ion-toolbar>
+			        </ion-footer>
+			      </ng-template>
+			    </ionic-selectable>
+        	</ion-item>
+        	<!-- <ion-item *ngIf="!showActionSelect">
+            	<ion-label>Create Action</ion-label>
+              	<ion-input name="action" placeholder="Print reports" type="text" ngModel required></ion-input>
             </ion-item>
+            <ion-item>	
+            	<ion-button color="medium" (click)="showActionSelect = !showActionSelect">{{ showActionSelect ? 'Create Action' : 'Select Action' }}</ion-button>
+            </ion-item>	 -->
+        	
+
             <ion-item>
+            	<ion-label>Escalation profile</ion-label>
 				<ionic-selectable
 				[(ngModel)]="sEscalationProfile"
 				[items]="escalation_profiles"
-				placeholder="Escalation profile"
 				itemValueField="sEscProfile"
 				itemTextField="sEscProfile"
 				[canSearch]="true"
@@ -43,15 +107,15 @@
 				</ionic-selectable>
         	</ion-item>
             <ion-item>
-			    <ion-label color="primary" (click)="mytoggle.checked = !mytoggle.checked">Feedback on close</ion-label>
+			    <ion-label (click)="mytoggle.checked = !mytoggle.checked">Feedback on close</ion-label>
 			    <ion-toggle #mytoggle class="button" color="secondary" [(ngModel)]="feedback" [ngModelOptions]="{standalone: true}"></ion-toggle>
 			</ion-item>
         	
             <ion-item>
+            	<ion-label>Assigned to</ion-label>
 				<ionic-selectable
 				[(ngModel)]="assigned_to"
 				[items]="users"
-				placeholder="Assigned to"
 				itemValueField="nPers_IdNr"
 				itemTextField="sPersName"
 				[canSearch]="true"
@@ -62,15 +126,15 @@
 
 
         	<ion-item>
-			  	<ion-label>YYYY-MM-DD</ion-label>
-			  	<ion-datetime name='assigned_until' displayFormat="YYYY-MM-DD" placeholder="Assigned until" ngModel></ion-datetime>
+			  	<ion-label >Assigned until</ion-label>
+			  	<ion-datetime name='assigned_until' displayFormat="YYYY-MM-DD" placeholder="YYYY-MM-DD" ngModel></ion-datetime>
 			</ion-item>
 
             <ion-item>
+			  	<ion-label>Priority</ion-label>
 				<ionic-selectable
 				[(ngModel)]="priority"
 				[items]="priorities"
-				placeholder="Priority"
 				itemValueField="id"
 				itemTextField="name"
 				[canSearch]="false"
@@ -79,11 +143,12 @@
 				</ionic-selectable>
         	</ion-item>
         	<ion-item>
-              	  <ion-textarea name='comment' rows="6" cols="20" placeholder="Comment " ngModel ></ion-textarea>
+              	  <ion-textarea name='comment' rows="3" cols="20" placeholder="Comment " ngModel ></ion-textarea>
             </ion-item>
         	<ion-item>
-              	  <ion-textarea name='additional_info' rows="6" cols="20" placeholder="Additional info" ngModel ></ion-textarea>
+              	  <ion-textarea name='additional_info' rows="3" cols="20" placeholder="Additional info" ngModel ></ion-textarea>
             </ion-item>
+            
 
           </div>
           <div padding>

@@ -23,14 +23,24 @@ export class LoginPage implements OnInit {
 
   plants: any;
   plant: any;
+  flag = false;
 
+  token: any;
+  sel_plant: any;
 
   ngOnInit() {
     this.userService.getPlants().subscribe((res)=>{
-      // this.router.navigateByUrl('action');
-      this.plants = res
-      console.log(res)
-    });
+          // this.router.navigateByUrl('action');
+          this.plants = res
+        });
+      // console.log(localStorage.getItem("token"));
+      if(localStorage.getItem("token")==null){
+        
+          this.router.navigateByUrl('action');
+        }
+    
+
+    
   }
 
   async presentToast(msg) {
@@ -43,17 +53,18 @@ export class LoginPage implements OnInit {
   }
 
   login(form){
-    console.log(form.value)
+    // console.log(form.value)
     this.userService.login(form.value).subscribe((res)=>{
       this.presentToast('Login successful!')
       this.router.navigateByUrl('action');
-      console.log(res)
-      this.storage.set('token', res.token);
+      // console.log(res)
+      localStorage.setItem("token", res.token);
+
       this.storage.set('userName', form.value.spers_idnr);
     },
     err => {
-      this.presentToast(err.statusText)
-        console.log(err);
+      this.presentToast(err.status+': Login failed!')
+        // console.log(err.status+': Login failed!');
     });
   }
 
@@ -62,8 +73,8 @@ export class LoginPage implements OnInit {
       value: any
     }) {
       this.storage.set('plant', event.value);
-      
-      console.log('port:', event.value);
+      this.flag = true;
+      // console.log('port:', event.value);
   }
 
 }
