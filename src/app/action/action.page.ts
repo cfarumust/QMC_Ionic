@@ -195,7 +195,7 @@ async presentToast(msg) {
 	  		action = this.action.sTask
 	  	else
 	  		action = form.value.action
-	  	let data = {sActionType: this.sActionType.sActionType, sEscalationProfile: this.sEscalationProfile.sEscProfile, fFeedback: this.feedback, sAction: action, sIntroducedBy: this.sIntroducedBy, sPlant: this.sPlant, sAssignedTo: this.assigned_to.sPersName, DTAssignedUntil: form.value.assigned_until, sPriority: this.priority.id, sComment: form.value.comment, saddinfo1: form.value.additional_info}
+	  	let data = {sActionType: this.sActionType.sActionType, sEscalationProfile: this.sEscalationProfile.sEscProfile, fFeedback: this.feedback, sAction: action, sIntroducedBy: this.sIntroducedBy, sPlant: this.sPlant, sAssignedTo: this.assigned_to.sPers_IdNr, DTAssignedUntil: form.value.assigned_until, sPriority: this.priority.id, sComment: form.value.comment, saddinfo1: form.value.additional_info}
 
 
 	  	 // data.sActionType = this.sActionType
