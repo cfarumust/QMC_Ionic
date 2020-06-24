@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
           // this.router.navigateByUrl('action');
           this.plants = res
         });
-      // console.log(localStorage.getItem("token"));
+      // // console.log(localStorage.getItem("token"));
       if(localStorage.getItem("token")==null){
         
           this.router.navigateByUrl('action');
@@ -53,18 +53,18 @@ export class LoginPage implements OnInit {
   }
 
   login(form){
-    // console.log(form.value)
+    // // console.log(form.value)
     this.userService.login(form.value).subscribe((res)=>{
       this.presentToast('Login successful!')
       this.router.navigateByUrl('action');
-      // console.log(res)
+      // // console.log(res)
       localStorage.setItem("token", res.token);
 
       this.storage.set('userName', form.value.spers_idnr);
     },
     err => {
       this.presentToast(err.status+': Login failed!')
-        // console.log(err.status+': Login failed!');
+        // // console.log(err.status+': Login failed!');
     });
   }
 
@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
     }) {
       this.storage.set('plant', event.value);
       this.flag = true;
-      // console.log('port:', event.value);
+      // // console.log('port:', event.value);
   }
 
 }

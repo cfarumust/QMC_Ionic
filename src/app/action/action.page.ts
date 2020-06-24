@@ -43,10 +43,16 @@ export class ActionPage implements OnInit {
   sPlant: any;
   showActionSelect = true;
   actionForm: FormGroup;
+  maxDate: any;
 
   @ViewChild('actionComponent') actionComponent: IonicSelectableComponent;
 
   ngOnInit() {
+
+  	var maxDate = new Date()
+   maxDate.setMonth(maxDate.getMonth() + 12)
+   this.maxDate = maxDate.toLocaleDateString('fr-CA')
+
     this.actionNameControl = this.formBuilder.control(null, Validators.required);
     this.actionForm = this.formBuilder.group({
       actionName: this.actionNameControl
@@ -62,20 +68,20 @@ export class ActionPage implements OnInit {
     		this.router.navigateByUrl('login');
     		return false;
     	}
-    	console.log(val)
+    	// console.log(val)
     	this.sPlant = val.smandnr
         this.userService.getEscalationProfile(val.nlfdmandnr).subscribe((res)=>{
 	      this.escalation_profiles = res
-	      console.log(res)
+	      // console.log(res)
 	    });
 	    this.userService.getUsers().subscribe((res)=>{
 	      this.users = res
-	      console.log(res)
+	      // console.log(res)
 	    });
 
 	    this.userService.getActionTypes().subscribe((res)=>{
 	      this.action_types = res
-	      console.log(res)
+	      // console.log(res)
 	    });
 
 	    
@@ -104,7 +110,7 @@ async presentToast(msg) {
       value: any
     }) {
   		this.assigned_to = event.value
-      	console.log('assignedTo:', event.value);
+      	// console.log('assignedTo:', event.value);
   }
 
 
@@ -116,9 +122,9 @@ async presentToast(msg) {
   		this.sActionType = event.value
   		this.userService.getActionsByType(event.value.nActionTypeId).subscribe((res)=>{
 	      this.actions = res
-      	console.log('actions:', this.actions);
+      	// console.log('actions:', this.actions);
 	    });
-      	// console.log('actions:', event.value);
+      	// // console.log('actions:', event.value);
   }
 
   priorityChange(event: {
@@ -126,7 +132,7 @@ async presentToast(msg) {
       value: any
     }) {
   		this.priority = event.value
-      	console.log('priority:', event.value);
+      	// console.log('priority:', event.value);
   }
 
   escalationChange(event: {
@@ -134,7 +140,7 @@ async presentToast(msg) {
       value: any
     }) {
   		this.sEscalationProfile = event.value
-      	console.log('priority:', event.value);
+      	// console.log('priority:', event.value);
   }
 
   actionChange(event: {
@@ -142,7 +148,7 @@ async presentToast(msg) {
       value: any
     }) {
   		this.action = event.value
-      	console.log('action:', event.value);
+      	// console.log('action:', event.value);
   }
 
   onSearchFail(event: {
@@ -168,12 +174,12 @@ async presentToast(msg) {
     event.component.hideAddItemTemplate();
   }
 
-  addActionTitle(event) {
+  addActionTitle() {
     let newAction = {sTask: this.actionNameControl.value }
   	this.actions.push(newAction)
-  	console.log(this.actionNameControl.value)
+  	// console.log(this.actionNameControl.value)
   	this.action = newAction
-  	// console.log(event)
+  	// // console.log(event)
     // Show list.
     this.actionComponent.hideAddItemTemplate();
   }
@@ -184,19 +190,19 @@ async presentToast(msg) {
 
   	try {
 
-  		console.log(this.showActionSelect)
+  		// console.log(this.showActionSelect)
 	  	if(this.showActionSelect)
 	  		action = this.action.sTask
 	  	else
 	  		action = form.value.action
-	  	let data = {sActionType: this.sActionType.sActionType, sEscalationProfile: this.sEscalationProfile.sEscProfile, fFeedback: this.feedback, sAction: action, sIntroducedBy: this.sIntroducedBy, sPlant: this.sPlant, sAssignedTo: this.assigned_to.sPersName, DTAssignedUntil: form.value.assigned_until, sPriority: this.priority.id}
+	  	let data = {sActionType: this.sActionType.sActionType, sEscalationProfile: this.sEscalationProfile.sEscProfile, fFeedback: this.feedback, sAction: action, sIntroducedBy: this.sIntroducedBy, sPlant: this.sPlant, sAssignedTo: this.assigned_to.sPersName, DTAssignedUntil: form.value.assigned_until, sPriority: this.priority.id, sComment: form.value.comment, saddinfo1: form.value.additional_info}
 
 
 	  	 // data.sActionType = this.sActionType
 	    console.log(data)
 	    this.userService.addAction(data).subscribe((res)=>{
 	      this.presentToast('Action created successfully !')
-	      console.log(res)
+	      // console.log(res)
 	      this.sActionType = {}
 	      this.sEscalationProfile = {}
 	      this.assigned_to = {}
@@ -206,7 +212,7 @@ async presentToast(msg) {
 	    },
 	    err => {
 	      this.presentToast(err.message)
-	        // console.log(err);
+	        // // console.log(err);
 	    });
 
 	} catch (err) {
